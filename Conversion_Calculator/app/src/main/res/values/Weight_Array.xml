@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Weight">
+    <item name="gram">gram(g)</item>
+    <item name="ounce">ounce(oz)</item>
+    </string-array>
+</resources>
