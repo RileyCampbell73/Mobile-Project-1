@@ -41,7 +41,7 @@
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
             <EditText
-                android:id="@+id/EditTextValue"
+                android:id="@+id/EditTextFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
@@ -49,14 +49,14 @@
                 android:layout_weight="1" >
             </EditText>
             <EditText
-                android:id="@+id/editTextTo"
+                android:id="@+id/EditTextTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
                 android:ems="10"
                 android:clickable="false"
-                android:enabled="false"
+                android:enabled="true"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:editable="true">
@@ -91,7 +91,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/calc"
-                android:id="@+id/buttonCalculate" />
+                android:id="@+id/buttonCalculate"
+                android:onClick="OnCalcClick" />
         </LinearLayout>
     </LinearLayout>
 
