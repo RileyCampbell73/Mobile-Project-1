@@ -1,8 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.riley4.conversion_calculator.WeightConverterActivity" >
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+    <item
+        android:id="@+id/VolumeMenuItem"
+        android:title="@string/Volume_title"
+        android:onClick="OnMenuClick"
+        ></item>
+    <item
+        android:title="@string/favorites"
+        ></item>
+    <item
+        android:id="@+id/AboutMenuItem"
+        android:title="@string/about"
+        android:onClick="OnMenuClick"
+        ></item>
 </menu>

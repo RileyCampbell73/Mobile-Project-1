@@ -12,19 +12,16 @@
             android:label="@string/Volume_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".WeightConverterActivity"
             android:label="@string/Weight_title" >
-
         </activity>
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about" >
-
         </activity>
     </application>
 

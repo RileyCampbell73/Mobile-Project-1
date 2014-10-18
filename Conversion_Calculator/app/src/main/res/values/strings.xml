@@ -11,6 +11,7 @@
     <string name="Volume_title">Volume Converter</string>
     <string name="Weight_title">Weight Converter</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="favorites">Favorites</string>
     <string name="about_text">James Haig, Riley Campbell, 2014</string>
 
 </resources>

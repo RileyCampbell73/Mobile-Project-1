@@ -1,8 +1,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".VolumeConverterActivity" >
-    <item android:id="@+id/action_settings"
+    <item
+        android:id="@+id/WeightMenuItem"
+        android:title="@string/Weight_title"
+        android:onClick="OnMenuClick"
+        ></item>
+    <item
+        android:title="@string/favorites"
+        ></item>
+    <item
+        android:id="@+id/AboutMenuItem"
         android:title="@string/about"
-        android:orderInCategory="100"
-        android:showAsAction="never" />
+        android:onClick="OnMenuClick"
+        ></item>
 </menu>

@@ -1,6 +1,7 @@
 package com.example.riley4.conversion_calculator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,17 +105,17 @@ public class VolumeConverterActivity extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public void CalculateConversion(){
         final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
@@ -122,7 +123,7 @@ public class VolumeConverterActivity extends Activity {
 
         double value = Double.parseDouble(fromText.getText().toString());
         DecimalFormat df2 = new DecimalFormat("##.##");
-        
+
         if (from == to) {
             toText.setText(String.valueOf(df2.format(value)));
         }
@@ -169,5 +170,18 @@ public class VolumeConverterActivity extends Activity {
 
     public void OnCalcClick(View view) {
         CalculateConversion();
+    }
+
+    public void OnMenuClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.WeightMenuItem:
+                startActivity(new Intent(this,WeightConverterActivity.class));
+                break;
+            case R.id.AboutMenuItem:
+                startActivity(new Intent(this,AboutActivity.class));
+                break;
+            default:
+               // return super.onOptionsItemSelected(item);
+        }
     }
 }
