@@ -2,11 +2,14 @@ package com.example.riley4.conversion_calculator;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -53,6 +56,8 @@ public class VolumeConverterActivity extends Activity {
     static final double LitertoBarrelUSD = 0.0086484898096;
     static final double LitertoBarrelUSL = 0.0083864143603;
 
+    public static final String PREFS_NAME = "Favorites";
+
 
     String from = "";
     String to = "";
@@ -65,14 +70,12 @@ public class VolumeConverterActivity extends Activity {
         final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
         final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         final EditText toText = (EditText)findViewById(R.id.EditTextTo);
-        fromText.setText("0");
-        toText.setText("0");
+        fromText.setText("1");
+        toText.setText("1");
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 from = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getBaseContext(), from,
-                        Toast.LENGTH_LONG).show();
                 CalculateConversion();
             }
 
@@ -86,9 +89,7 @@ public class VolumeConverterActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 to = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getBaseContext(),to,
-                        Toast.LENGTH_LONG).show();
-                        //CalculateConversion();
+                        CalculateConversion();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -96,26 +97,58 @@ public class VolumeConverterActivity extends Activity {
                         Toast.LENGTH_LONG).show();
             }
         });
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int thing = settings.getInt("thing", 0);
+        Toast.makeText(getBaseContext(),Integer.toString(thing),
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        SubMenu menu4 = menu.addSubMenu(Menu.NONE, 0, 4,"Your Favorites");
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int thing = settings.getInt("thing", -1);
+        for (int i = 0; i <+ thing ; i ++) {
+            menu4.add(0, 0, 1, settings.getString("Fav" + Integer.toString(i), ""));
+        }
+
         getMenuInflater().inflate(R.menu.volume_converter, menu);
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        String title = item.getTitle().toString();
+        if (title != "Weight Converter" || title != "Save as Favorite" || title != "About" || title != "Your Favorites" ) {
+            int test = title.indexOf("to");
+            Toast.makeText(getBaseContext(), Integer.toString(test),
+                        Toast.LENGTH_SHORT).show();
+            if (test > -1){
+                String to = title.substring(test + 3) ;
+                String from = title.substring(0, test - 1);
+
+                final Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
+                final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
+
+                ArrayAdapter myAdap = (ArrayAdapter) fromSpinner.getAdapter(); //cast to an ArrayAdapter
+                int spinnerPosition = myAdap.getPosition(from);
+                //set the default according to value
+                fromSpinner.setSelection(spinnerPosition);
+
+                myAdap = (ArrayAdapter) toSpinner.getAdapter(); //cast to an ArrayAdapter
+                spinnerPosition = myAdap.getPosition(to);
+                //set the default according to value
+                toSpinner.setSelection(spinnerPosition);
+            }
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void CalculateConversion(){
         final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
@@ -179,6 +212,16 @@ public class VolumeConverterActivity extends Activity {
                 break;
             case R.id.AboutMenuItem:
                 startActivity(new Intent(this,AboutActivity.class));
+                break;
+            case R.id.SaveFavorite:
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                int thing = settings.getInt("thing", 0);
+
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putString("Fav" + thing, from + " to " + to);
+                thing = thing + 1;
+                editor.putInt("thing", thing);
+                editor.commit();
                 break;
             default:
                // return super.onOptionsItemSelected(item);
