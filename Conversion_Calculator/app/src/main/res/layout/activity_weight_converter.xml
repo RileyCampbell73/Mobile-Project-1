@@ -87,12 +87,12 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-
             <Button
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/calc"
-                android:id="@+id/buttonCalculate" />
+                android:id="@+id/buttonCalculate"
+                android:onClick="OnCalcClick"/>
         </LinearLayout>
 
 
