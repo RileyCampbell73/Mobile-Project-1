@@ -3,9 +3,9 @@
     <string-array name="Weight">
         <item name="gram">Gram(g)</item>
         <item name="ounce">Ounce(oz)</item>
-        <item name="pound">Pound(lb)></item>
-        <item name="kilogram">Kilogram(kg)></item>
-        <item name="milligram">Milligram(mg)></item>
-        <item name="grain">Grain></item>
+        <item name="pound">Pound(lb)</item>
+        <item name="kilogram">Kilogram(kg)</item>
+        <item name="milligram">Milligram(mg)</item>
+        <item name="grain">Grain</item>
     </string-array>
 </resources>

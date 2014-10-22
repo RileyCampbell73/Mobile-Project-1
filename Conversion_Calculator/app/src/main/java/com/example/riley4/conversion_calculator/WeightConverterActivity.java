@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class WeightConverterActivity extends Activity {
         setContentView(R.layout.activity_weight_converter);
 
         conversions.put("poundToGram", 453.59237);
-        conversions.put("ounceToGram", 128.349523125);
+        conversions.put("ounceToGram", 28.349523125);
         conversions.put("milligramToGram",  0.001);
         conversions.put("kilogramToGram", 1000.00);
         conversions.put("grainToGram", 0.06479891);
@@ -80,11 +81,12 @@ public class WeightConverterActivity extends Activity {
         if( from.equals(to.toString()) )
             toText.setText(fromText.getText());
 
-        if( from.equals("Ounce(oz)") ) { gramAmount *= conversions.get("ounceToGram"); }
-        else if( from.equals("Pound(lb)") ) { gramAmount *= conversions.get("poundToGram"); }
-        else if( from.equals("Kilogram(kg)") ) { gramAmount *= conversions.get("kilogramToGram"); }
-        else if( from.equals("Milligram(mg)") ) { gramAmount *= conversions.get("milligramToGram"); }
-        else if( from.equals("Grain") ) { gramAmount *= conversions.get("grainToGram"); }
+        if( from.equals("Ounce(oz)") ) { gramAmount = conversions.get("ounceToGram") * amount; }
+        else if( from.equals("Pound(lb)") ) { gramAmount = conversions.get("poundToGram") * amount; }
+        else if( from.equals("Kilogram(kg)") ) { gramAmount = conversions.get("kilogramToGram") * amount; }
+        else if( from.equals("Milligram(mg)") ) { gramAmount = conversions.get("milligramToGram") * amount; }
+        else if( from.equals("Grain") ) { gramAmount = conversions.get("grainToGram") * amount; }
+        else if( from.equals("Gram(g)") ) { gramAmount = 1.0 * amount; }
 
         if( to.equals("Ounce(oz)") ) { gramAmount *= conversions.get("gramToOunce"); }
         else if( to.equals("Pound(lb)") ) { gramAmount *= conversions.get("gramToPound"); }
@@ -92,8 +94,8 @@ public class WeightConverterActivity extends Activity {
         else if( to.equals("Milligram(mg)") ) { gramAmount *= conversions.get("gramToMilligram"); }
         else if( to.equals("Grain") ) { gramAmount *= conversions.get("gramToGrain"); }
 
-        DecimalFormat df2 = new DecimalFormat("##.##");
-        toText.setText(String.valueOf(df2.format(amount)));
+        DecimalFormat df2 = new DecimalFormat("##.####");
+        toText.setText(String.valueOf(df2.format(gramAmount)));
     }
 
     public void OnCalcClick(View view) {
@@ -107,6 +109,6 @@ public class WeightConverterActivity extends Activity {
         double amount = Double.parseDouble(fromText.getText().toString());
 
         // pass data to calculateConversion
-        calculateConversion(fromSpinner.toString(), toSpinner.toString(), amount);
+        calculateConversion(fromSpinner.getSelectedItem().toString(), toSpinner.getSelectedItem().toString(), amount);
     }
 }
