@@ -16,7 +16,7 @@
         <item name="pintUSD">Pint[US,dry]</item>
         <item name="pintUSF">Pint[US,Liquid]</item>
         <item name="barrelUK">Barrel[UK]</item>
-        <item name="barrelUSD">Barrel[US, Dry]</item>
-        <item name="barrelUSL">Barrel[US, Liquid]</item>
+        <item name="barrelUSD">Barrel[US,Dry]</item>
+        <item name="barrelUSL">Barrel[US,Liquid]</item>
     </string-array>
 </resources>

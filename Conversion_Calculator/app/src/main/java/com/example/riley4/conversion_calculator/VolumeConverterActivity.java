@@ -18,7 +18,8 @@ import android.widget.Toast;
 import java.text.DecimalFormat;
 
 //converter app.
-//have constants for everything to convert to and from liter?
+//Volume Converter done by Riley Campbell
+//Finalized Oct 25, 2014
 
 
 public class VolumeConverterActivity extends Activity {
@@ -56,8 +57,7 @@ public class VolumeConverterActivity extends Activity {
     static final double LitertoBarrelUSD = 0.0086484898096;
     static final double LitertoBarrelUSL = 0.0083864143603;
 
-    public static final String PREFS_NAME = "Favorites";
-
+    public static final String PREFS_NAME = "VolumeFavorites1";
 
     String from = "";
     String to = "";
@@ -70,8 +70,10 @@ public class VolumeConverterActivity extends Activity {
         final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
         final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         final EditText toText = (EditText)findViewById(R.id.EditTextTo);
+        //set textfields to 1
         fromText.setText("1");
         toText.setText("1");
+        //set up listeners on the from spinner
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -85,6 +87,7 @@ public class VolumeConverterActivity extends Activity {
                         Toast.LENGTH_LONG).show();
             }
         });
+        //set up listeners on the to spinner
         toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -97,11 +100,6 @@ public class VolumeConverterActivity extends Activity {
                         Toast.LENGTH_LONG).show();
             }
         });
-
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        int thing = settings.getInt("thing", 0);
-        Toast.makeText(getBaseContext(),Integer.toString(thing),
-                Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -109,11 +107,10 @@ public class VolumeConverterActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         SubMenu menu4 = menu.addSubMenu(Menu.NONE, 0, 4,"Your Favorites");
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        int thing = settings.getInt("thing", -1);
-        for (int i = 0; i <+ thing ; i ++) {
+        int selector = settings.getInt("selector", -1);
+        for (int i = 0; i <+ selector ; i ++) {
             menu4.add(0, 0, 1, settings.getString("Fav" + Integer.toString(i), ""));
         }
-
         getMenuInflater().inflate(R.menu.volume_converter, menu);
         return true;
     }
@@ -126,8 +123,6 @@ public class VolumeConverterActivity extends Activity {
         String title = item.getTitle().toString();
         if (title != "Weight Converter" || title != "Save as Favorite" || title != "About" || title != "Your Favorites" ) {
             int test = title.indexOf("to");
-            Toast.makeText(getBaseContext(), Integer.toString(test),
-                        Toast.LENGTH_SHORT).show();
             if (test > -1){
                 String to = title.substring(test + 3) ;
                 String from = title.substring(0, test - 1);
@@ -137,12 +132,12 @@ public class VolumeConverterActivity extends Activity {
 
                 ArrayAdapter myAdap = (ArrayAdapter) fromSpinner.getAdapter(); //cast to an ArrayAdapter
                 int spinnerPosition = myAdap.getPosition(from);
-                //set the default according to value
+                //set the spinner according to value
                 fromSpinner.setSelection(spinnerPosition);
 
                 myAdap = (ArrayAdapter) toSpinner.getAdapter(); //cast to an ArrayAdapter
                 spinnerPosition = myAdap.getPosition(to);
-                //set the default according to value
+                //set the spinner according to value
                 toSpinner.setSelection(spinnerPosition);
             }
 
@@ -153,15 +148,15 @@ public class VolumeConverterActivity extends Activity {
     public void CalculateConversion(){
         final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         final EditText toText = (EditText)findViewById(R.id.EditTextTo);
-
+        //grabs the number from the textbox that the user put in
         double value = Double.parseDouble(fromText.getText().toString());
-        DecimalFormat df2 = new DecimalFormat("##.##");
+        DecimalFormat df2 = new DecimalFormat("##.######");
 
         if (from == to) {
             toText.setText(String.valueOf(df2.format(value)));
         }
         else {
-            //convert first thing to liters
+            //convert 'from' number to liters
             if (from.equals("Cup[Canada]")) {value = value * CupCANtoLiter;}
             else if (from.equals("Cup[US]")) { value = value * CupUStoLiter;}
             else if (from.equals("Cup[Metric]")) {value = value * CupMETtoLiter;}
@@ -179,7 +174,7 @@ public class VolumeConverterActivity extends Activity {
             else if (from.equals("Barrel[US, Dry]")) { value = value * BarrelUSDtoLiter;  }
             else if (from.equals("Barrel[US, Liquid]")) {  value = value * BarrelUSLtoLiter;  }
 
-            //convert second thing from liters to second thing
+            //convert the converted value to the 'to' value
             if (to.equals("Tablespoon[US]")) { value = value * LitertoTablespoonUS;}
             else if (to.equals("Cup[Canada]")) {    value = value * LitertoCupCAN; }
             else if (to.equals("Cup[US]")) {  value = value * LitertoCupUS; }
@@ -195,16 +190,16 @@ public class VolumeConverterActivity extends Activity {
             else if (to.equals("Pint[US,dry]")) { value = value * LitertoPintUSD;  }
             else if (to.equals("Pint[US,Liquid]")) { value = value * LitertoPintUSL; }
             else if (to.equals("Barrel[UK]")) {value = value * LitertoBarrelUK;  }
-            else if (to.equals("Barrel[US, Dry]")) {  value = value * LitertoBarrelUSD; }
-            else if (to.equals("Barrel[US, Liquid]")) { value = value * LitertoBarrelUSL; }
+            else if (to.equals("Barrel[US,Dry]")) {  value = value * LitertoBarrelUSD; }
+            else if (to.equals("Barrel[US,Liquid]")) { value = value * LitertoBarrelUSL; }
             toText.setText(String.valueOf(df2.format(value)));
         }
     }
-
+//function for the calculate
     public void OnCalcClick(View view) {
         CalculateConversion();
     }
-
+//function for menu clicks
     public void OnMenuClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.WeightMenuItem:
@@ -215,12 +210,12 @@ public class VolumeConverterActivity extends Activity {
                 break;
             case R.id.SaveFavorite:
                 SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                int thing = settings.getInt("thing", 0);
-
+                int selector = settings.getInt("selector", 0);
+                //push the current conversion to the shared preferences
                 SharedPreferences.Editor editor = settings.edit();
-                editor.putString("Fav" + thing, from + " to " + to);
-                thing = thing + 1;
-                editor.putInt("thing", thing);
+                editor.putString("Fav" + selector, from + " to " + to);
+                selector = selector + 1;
+                editor.putInt("selector", selector);
                 editor.commit();
                 break;
             default:
