@@ -111,4 +111,9 @@ public class WeightConverterActivity extends Activity {
         // pass data to calculateConversion
         calculateConversion(fromSpinner.getSelectedItem().toString(), toSpinner.getSelectedItem().toString(), amount);
     }
+
+    public void onAddClick(View view) {
+        // add the conversion and the name (if filled out) to a data structure to send over to the conversion list activity
+        
+    }
 }
