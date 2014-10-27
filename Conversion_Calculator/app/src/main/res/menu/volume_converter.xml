@@ -12,6 +12,11 @@
         android:onClick="OnMenuClick"
         ></item>
     <item
+        android:id="@+id/ConversionList"
+        android:title="@string/conversion_list"
+        android:onClick="OnMenuClick"
+        ></item>
+    <item
         android:id="@+id/AboutMenuItem"
         android:title="@string/about"
         android:onClick="OnMenuClick"

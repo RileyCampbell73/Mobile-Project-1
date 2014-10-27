@@ -15,4 +15,7 @@
     <string name="about_text">James Haig, Riley Campbell, 2014</string>
     <string name="add_conversion">Add To Your Conversion List</string>
     <string name="name_conversion">Name The Conversion</string>
+    <string name="title_activity_conversion_list">ConversionList</string>
+    <string name="conversion_list">Conversion List</string>
+
 </resources>

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.riley4.conversion_calculator.AboutActivity" >
+    tools:context="com.example.riley4.conversion_calculator.ConversionListActivity" >
     <item
         android:id="@+id/VolumeMenuItem"
         android:title="@string/Volume_title"

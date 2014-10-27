@@ -92,11 +92,12 @@ public class VolumeConverterActivity extends Activity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 to = parent.getItemAtPosition(position).toString();
-                        CalculateConversion();
+                CalculateConversion();
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Toast.makeText(getBaseContext(),"Please make a selection",
+                Toast.makeText(getBaseContext(), "Please make a selection",
                         Toast.LENGTH_LONG).show();
             }
         });
@@ -121,7 +122,7 @@ public class VolumeConverterActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         String title = item.getTitle().toString();
-        if (title != "Weight Converter" || title != "Save as Favorite" || title != "About" || title != "Your Favorites" ) {
+        if (title != "Weight Converter" || title != "Save as Favorite" || title != "About" || title != "Your Favorites" || title != "Conversion List" ) {
             int test = title.indexOf("to");
             if (test > -1){
                 String to = title.substring(test + 3) ;
@@ -218,8 +219,49 @@ public class VolumeConverterActivity extends Activity {
                 editor.putInt("selector", selector);
                 editor.commit();
                 break;
+            case R.id.ConversionList:
+                startActivity(new Intent(this,ConversionList.class));
+                break;
             default:
                // return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void onAddClick(View view) {
+        // Do the conversion, just in case they haven't hit it yet
+        CalculateConversion();
+
+        // add the conversion and the name (if filled out) to a data structure to send over to the conversion list activity
+        EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
+        EditText toText = (EditText)findViewById(R.id.EditTextTo);
+
+        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
+        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
+
+        String to = toSpinner.getSelectedItem().toString();
+        String from = fromSpinner.getSelectedItem().toString();
+
+        EditText etConversionName = (EditText)findViewById(R.id.editTextCalcName);
+
+        String conversionName = etConversionName.getText().toString().isEmpty() ? "No Name"
+                : etConversionName.getText().toString();
+
+        StringBuilder conversionItem = new StringBuilder();
+        conversionItem.append("- ");
+        conversionItem.append(conversionName);
+        conversionItem.append(" : ");
+        conversionItem.append(fromText.getText().toString());
+        conversionItem.append(" ");
+        conversionItem.append(from);
+        conversionItem.append(" = ");
+        conversionItem.append(toText.getText().toString());
+        conversionItem.append(" ");
+        conversionItem.append(to);
+
+        // add the item to the list of items that will be displayed on the ConversionList activity
+        ((ConversionCalculator) this.getApplication()).addItem(conversionItem.toString());
+
+        // clear out the conversion name edit text box
+        etConversionName.setText("");
     }
 }
