@@ -11,6 +11,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
+/*
+    Conversion List Activity
+    Purpose: Shows the user all the conversions they've added, and allows them to clear the list.
+    Authors: James Haig, Riley Campbell
+    Date: October 26, 2014
+ */
 
 public class ConversionList extends Activity {
 

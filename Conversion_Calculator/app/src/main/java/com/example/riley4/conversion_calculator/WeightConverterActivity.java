@@ -20,6 +20,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/*
+    Weight Converter Activity
+    Purpose: Converts common weights, allows the user to save their favourite conversions to a list,
+             and make a list of conversions so they can convert multiple volumes and weights and see
+             them all.
+    Authors: James Haig, Riley Campbell
+    Date: October 26, 2014
+ */
+
 public class WeightConverterActivity extends Activity {
 
     // pound, ounce, gram, milligram, kilogram, grain,
@@ -40,6 +49,18 @@ public class WeightConverterActivity extends Activity {
         conversions.put("milligramToGram",  0.001);
         conversions.put("kilogramToGram", 1000.00);
         conversions.put("grainToGram", 0.06479891);
+        conversions.put("centigramToGram", 0.01);
+        conversions.put("decigramToGram", 0.1);
+        conversions.put("dekagramToGram", 10.0);
+        conversions.put("dramToGram", 1.7718451953);
+        conversions.put("hectogramToGram", 100.0);
+        conversions.put("megagramToGram", 1000000.0);
+        conversions.put("microgramToGram", 0.000001);
+        conversions.put("hundredweightLongUkToGram", 50802.34544);
+        conversions.put("hundredweightShortUsToGram", 45359.237);
+        conversions.put("tonMetricToGram", 1000000.0);
+        conversions.put("tonLongUkToGram", 1016046.9088);
+        conversions.put("tonShortUsToGram", 907184.74);
 
         final Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
         final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
@@ -145,29 +166,47 @@ public class WeightConverterActivity extends Activity {
         EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         EditText toText = (EditText)findViewById(R.id.EditTextTo);
 
-//        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
-//        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
-//
-//        String to = toSpinner.getSelectedItem().toString();
-//        String from = fromSpinner.getSelectedItem().toString();
-
         double amount = Double.parseDouble(fromText.getText().toString());
 
         if( from.equals(to.toString()) )
             toText.setText(fromText.getText());
 
-        if( from.equals("Ounce(oz)") ) { gramAmount = conversions.get("ounceToGram") * amount; }
-        else if( from.equals("Pound(lb)") ) { gramAmount = conversions.get("poundToGram") * amount; }
-        else if( from.equals("Kilogram(kg)") ) { gramAmount = conversions.get("kilogramToGram") * amount; }
-        else if( from.equals("Milligram(mg)") ) { gramAmount = conversions.get("milligramToGram") * amount; }
+        if( from.equals("Ounce[oz]") ) { gramAmount = conversions.get("ounceToGram") * amount; }
+        else if( from.equals("Pound[lb]") ) { gramAmount = conversions.get("poundToGram") * amount; }
+        else if( from.equals("Kilogram[kg]") ) { gramAmount = conversions.get("kilogramToGram") * amount; }
+        else if( from.equals("Milligram[mg]") ) { gramAmount = conversions.get("milligramToGram") * amount; }
         else if( from.equals("Grain") ) { gramAmount = conversions.get("grainToGram") * amount; }
-        else if( from.equals("Gram(g)") ) { gramAmount = amount; }
+        else if( from.equals("Centigram") ) { gramAmount = conversions.get("centigramToGram") * amount; }
+        else if( from.equals("Decigram") ) { gramAmount = conversions.get("decigramToGram") * amount; }
+        else if( from.equals("Dekagram") ) { gramAmount = conversions.get("dekagramToGram") * amount; }
+        else if( from.equals("Hectogram") ) { gramAmount = conversions.get("hectogramToGram") * amount; }
+        else if( from.equals("Megagram") ) { gramAmount = conversions.get("megagramToGram") * amount; }
+        else if( from.equals("Microgram") ) { gramAmount = conversions.get("microgramToGram") * amount; }
+        else if( from.equals("Dram") ) { gramAmount = conversions.get("dramToGram") * amount; }
+        else if( from.equals("Hundredweight[Long, UK]") ) { gramAmount = conversions.get("hundredweightLongUkToGram") * amount; }
+        else if( from.equals("Hundredweight[Short, US]") ) { gramAmount = conversions.get("hundredweightShortUsToGram") * amount; }
+        else if( from.equals("Ton[Metric]") ) { gramAmount = conversions.get("tonMetricToGram") * amount; }
+        else if( from.equals("Ton[Long, UK]") ) { gramAmount = conversions.get("tonLongUkToGram") * amount; }
+        else if( from.equals("Ton[Short, US]") ) { gramAmount = conversions.get("tonShortUsToGram") * amount; }
+        else if( from.equals("Gram[g]") ) { gramAmount = amount; }
 
-        if( to.equals("Ounce(oz)") ) { gramAmount /= conversions.get("ounceToGram"); }
-        else if( to.equals("Pound(lb)") ) { gramAmount /= conversions.get("poundToGram"); }
-        else if( to.equals("Kilogram(kg)") ) { gramAmount /= conversions.get("kilogramToGram"); }
-        else if( to.equals("Milligram(mg)") ) { gramAmount /= conversions.get("milligramToGram"); }
+        if( to.equals("Ounce[oz]") ) { gramAmount /= conversions.get("ounceToGram"); }
+        else if( to.equals("Pound[lb]") ) { gramAmount /= conversions.get("poundToGram"); }
+        else if( to.equals("Kilogram[kg]") ) { gramAmount /= conversions.get("kilogramToGram"); }
+        else if( to.equals("Milligram[mg]") ) { gramAmount /= conversions.get("milligramToGram"); }
         else if( to.equals("Grain") ) { gramAmount /= conversions.get("grainToGram"); }
+        else if( to.equals("Centigram") ) { gramAmount /= conversions.get("centigramToGram"); }
+        else if( to.equals("Decigram") ) { gramAmount /= conversions.get("decigramToGram"); }
+        else if( to.equals("Dekagram") ) { gramAmount /= conversions.get("dekagramToGram"); }
+        else if( to.equals("Hectogram") ) { gramAmount /= conversions.get("hectogramToGram"); }
+        else if( to.equals("Megagram") ) { gramAmount /= conversions.get("megagramToGram"); }
+        else if( to.equals("Microgram") ) { gramAmount /= conversions.get("microgramToGram"); }
+        else if( to.equals("Dram") ) { gramAmount /= conversions.get("dramToGram"); }
+        else if( to.equals("Hundredweight[Long, UK]") ) { gramAmount /= conversions.get("hundredweightLongUkToGram"); }
+        else if( to.equals("Hundredweight[Short, US]") ) { gramAmount /= conversions.get("hundredweightShortUsToGram"); }
+        else if( to.equals("Ton[Metric]") ) { gramAmount /= conversions.get("tonMetricToGram"); }
+        else if( to.equals("Ton[Long, UK]") ) { gramAmount /= conversions.get("tonLongUkToGram"); }
+        else if( to.equals("Ton[Short, US]") ) { gramAmount /= conversions.get("tonShortUsToGram"); }
 
         DecimalFormat df2 = new DecimalFormat("##.####");
         toText.setText(String.valueOf(df2.format(gramAmount)));
