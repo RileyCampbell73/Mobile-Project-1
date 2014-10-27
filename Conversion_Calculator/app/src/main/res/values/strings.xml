@@ -17,5 +17,6 @@
     <string name="name_conversion">Name The Conversion</string>
     <string name="title_activity_conversion_list">ConversionList</string>
     <string name="conversion_list">Conversion List</string>
+    <string name="add_favourites">Add to Favorites</string>
 
 </resources>

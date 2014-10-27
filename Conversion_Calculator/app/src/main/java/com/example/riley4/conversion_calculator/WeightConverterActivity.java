@@ -7,7 +7,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,6 +27,9 @@ public class WeightConverterActivity extends Activity {
 
     public static final String PREFS_NAME = "WeightFavorites1";
 
+    String from = "";
+    String to = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,31 +41,86 @@ public class WeightConverterActivity extends Activity {
         conversions.put("kilogramToGram", 1000.00);
         conversions.put("grainToGram", 0.06479891);
 
-//        conversions.put("gramToPound", 0.0022046226218);
-//        conversions.put("gramToOunce", 0.03527396195);
-//        conversions.put("gramToMilligram", 1000.0);
-//        conversions.put("gramToKilogram", 0.001);
-//        conversions.put("gramToGrain", 15.432358353);
+        final Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
+        final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
+        final EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
+        final EditText toText = (EditText)findViewById(R.id.EditTextTo);
+
+        //set textfields to 1
+        fromText.setText("1");
+        toText.setText("1");
+
+        //set up listeners on the from spinner
+        fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                from = parent.getItemAtPosition(position).toString();
+                calculateConversion();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getBaseContext(), "Please make a selection",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+        //set up listeners on the to spinner
+        toSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                to = parent.getItemAtPosition(position).toString();
+                calculateConversion();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getBaseContext(), "Please make a selection",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        SubMenu menu4 = menu.addSubMenu(Menu.NONE, 0, 4,"Your Favorites");
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int selector = settings.getInt("selector", -1);
+        for (int i = 0; i <= selector ; i ++) {
+            menu4.add(0, 0, 1, settings.getString("Fav" + Integer.toString(i), ""));
+        }
         getMenuInflater().inflate(R.menu.weight_converter, menu);
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        String title = item.getTitle().toString();
+        if (title != "Volume Converter" || title != "Save as Favorite" || title != "About" || title != "Your Favorites" || title != "Conversion List" ) {
+            int test = title.indexOf("to");
+            if (test > -1){
+                String to = title.substring(test + 3) ;
+                String from = title.substring(0, test - 1);
+
+                final Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
+                final Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
+
+                ArrayAdapter myAdap = (ArrayAdapter) fromSpinner.getAdapter(); //cast to an ArrayAdapter
+                int spinnerPosition = myAdap.getPosition(from);
+                //set the spinner according to value
+                fromSpinner.setSelection(spinnerPosition);
+
+                myAdap = (ArrayAdapter) toSpinner.getAdapter(); //cast to an ArrayAdapter
+                spinnerPosition = myAdap.getPosition(to);
+                //set the spinner according to value
+                toSpinner.setSelection(spinnerPosition);
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void OnMenuClick(MenuItem item) {
         switch (item.getItemId()) {
@@ -68,20 +129,6 @@ public class WeightConverterActivity extends Activity {
                 break;
             case R.id.AboutMenuItem:
                 startActivity(new Intent(this,AboutActivity.class));
-                break;
-            case R.id.SaveFavorite:
-                // pull the names of the conversions
-                Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
-                Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
-
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                int selector = settings.getInt("selector", 0);
-                //push the current conversion to the shared preferences
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("Fav" + selector, fromSpinner.getSelectedItem().toString() + " to " + toSpinner.getSelectedItem().toString());
-                selector = selector + 1;
-                editor.putInt("selector", selector);
-                editor.commit();
                 break;
             case R.id.ConversionList:
                 startActivity(new Intent(this,ConversionList.class));
@@ -98,11 +145,11 @@ public class WeightConverterActivity extends Activity {
         EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         EditText toText = (EditText)findViewById(R.id.EditTextTo);
 
-        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
-        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
-
-        String to = toSpinner.getSelectedItem().toString();
-        String from = fromSpinner.getSelectedItem().toString();
+//        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
+//        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
+//
+//        String to = toSpinner.getSelectedItem().toString();
+//        String from = fromSpinner.getSelectedItem().toString();
 
         double amount = Double.parseDouble(fromText.getText().toString());
 
@@ -138,12 +185,6 @@ public class WeightConverterActivity extends Activity {
         EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         EditText toText = (EditText)findViewById(R.id.EditTextTo);
 
-        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
-        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
-
-        String to = toSpinner.getSelectedItem().toString();
-        String from = fromSpinner.getSelectedItem().toString();
-
         EditText etConversionName = (EditText)findViewById(R.id.editTextCalcName);
 
         String conversionName = etConversionName.getText().toString().isEmpty() ? "No Name"
@@ -166,5 +207,19 @@ public class WeightConverterActivity extends Activity {
 
         // clear out the conversion name edit text box
         etConversionName.setText("");
+
+        Toast.makeText(getBaseContext(), "Conversion Added!", Toast.LENGTH_LONG).show();
+    }
+
+    public void addToFavorites(View view) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int selector = settings.getInt("selector", 0);
+        //push the current conversion to the shared preferences
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("Fav" + selector, from + " to " + to);
+        selector = selector + 1;
+        editor.putInt("selector", selector);
+        editor.commit();
+        Toast.makeText(getBaseContext(), "Favorite Added!", Toast.LENGTH_LONG).show();
     }
 }

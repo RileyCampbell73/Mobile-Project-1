@@ -7,11 +7,6 @@
         android:onClick="OnMenuClick"
         ></item>
     <item
-        android:id="@+id/SaveFavorite"
-        android:title="@string/favorites"
-        android:onClick="OnMenuClick"
-        ></item>
-    <item
         android:id="@+id/ConversionList"
         android:title="@string/conversion_list"
         android:onClick="OnMenuClick"

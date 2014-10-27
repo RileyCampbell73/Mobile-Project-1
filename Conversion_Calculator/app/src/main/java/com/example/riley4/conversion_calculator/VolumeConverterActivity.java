@@ -109,7 +109,7 @@ public class VolumeConverterActivity extends Activity {
         SubMenu menu4 = menu.addSubMenu(Menu.NONE, 0, 4,"Your Favorites");
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         int selector = settings.getInt("selector", -1);
-        for (int i = 0; i <+ selector ; i ++) {
+        for (int i = 0; i <= selector ; i ++) {
             menu4.add(0, 0, 1, settings.getString("Fav" + Integer.toString(i), ""));
         }
         getMenuInflater().inflate(R.menu.volume_converter, menu);
@@ -209,16 +209,6 @@ public class VolumeConverterActivity extends Activity {
             case R.id.AboutMenuItem:
                 startActivity(new Intent(this,AboutActivity.class));
                 break;
-            case R.id.SaveFavorite:
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                int selector = settings.getInt("selector", 0);
-                //push the current conversion to the shared preferences
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putString("Fav" + selector, from + " to " + to);
-                selector = selector + 1;
-                editor.putInt("selector", selector);
-                editor.commit();
-                break;
             case R.id.ConversionList:
                 startActivity(new Intent(this,ConversionList.class));
                 break;
@@ -234,12 +224,6 @@ public class VolumeConverterActivity extends Activity {
         // add the conversion and the name (if filled out) to a data structure to send over to the conversion list activity
         EditText fromText = (EditText)findViewById(R.id.EditTextFrom);
         EditText toText = (EditText)findViewById(R.id.EditTextTo);
-
-        Spinner fromSpinner = (Spinner)findViewById(R.id.spinnerFrom);
-        Spinner toSpinner = (Spinner)findViewById(R.id.spinnerTo);
-
-        String to = toSpinner.getSelectedItem().toString();
-        String from = fromSpinner.getSelectedItem().toString();
 
         EditText etConversionName = (EditText)findViewById(R.id.editTextCalcName);
 
@@ -263,5 +247,19 @@ public class VolumeConverterActivity extends Activity {
 
         // clear out the conversion name edit text box
         etConversionName.setText("");
+
+        Toast.makeText(getBaseContext(), "Conversion Added!", Toast.LENGTH_LONG).show();
+    }
+
+    public void addToFavorites(View view) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        int selector = settings.getInt("selector", 0);
+        //push the current conversion to the shared preferences
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("Fav" + selector, from + " to " + to);
+        selector = selector + 1;
+        editor.putInt("selector", selector);
+        editor.commit();
+        Toast.makeText(getBaseContext(), "Favorite Added!", Toast.LENGTH_LONG).show();
     }
 }

@@ -101,11 +101,24 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="@string/add_favourites"
+                android:id="@+id/buttonAddToFavs"
+                android:onClick="addToFavorites" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
             <EditText
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/editTextCalcName"
-                android:hint="@string/add_conversion" />
+                android:hint="@string/name_conversion" />
         </LinearLayout>
 
         <LinearLayout
