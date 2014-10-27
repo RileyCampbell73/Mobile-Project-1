@@ -9,8 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".VolumeConverterActivity"
-            android:label="@string/Volume_title" >
+            android:name=".VolumeConverterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,16 +17,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".WeightConverterActivity"
-            android:label="@string/Weight_title" >
+            android:name=".WeightConverterActivity" >
         </activity>
         <activity
-            android:name=".AboutActivity"
-            android:label="@string/title_activity_about" >
+            android:name=".AboutActivity" >
         </activity>
         <activity
-            android:name=".ConversionList"
-            android:label="@string/title_activity_conversion_list" >
+            android:name=".ConversionList" >
         </activity>
     </application>
 
