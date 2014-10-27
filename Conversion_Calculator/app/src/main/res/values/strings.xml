@@ -12,9 +12,12 @@
     <string name="Weight_title">Weight Converter</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="favorites">Save as Favorite</string>
-    <string name="about_text">James Haig, Riley Campbell, 2014</string>
+    <string name="about_text">James Haig, Riley Campbell, 2014.\n
+    This app converts volumes and weights.  You can add favorite conversions and view them from the \"Your Favorites\" menu.\n
+    You can also add multiple conversions to a conversion list (if say, you\'re converting a whole recipe) and view them all
+    at once by selecting \"Conversion List\" from the menu.</string>
     <string name="add_conversion">Add To Your Conversion List</string>
-    <string name="name_conversion">Name The Conversion</string>
+    <string name="name_conversion">Name The Conversion(optional)</string>
     <string name="title_activity_conversion_list">ConversionList</string>
     <string name="conversion_list">Conversion List</string>
     <string name="add_favourites">Add to Favorites</string>

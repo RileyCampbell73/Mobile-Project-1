@@ -32,9 +32,6 @@ public class ConversionList extends Activity {
         // get the list of conversions
         List<String> listOfConversions = ((ConversionCalculator) this.getApplication()).getList();
 
-//        if (!listOfConversions.isEmpty())
-//            Toast.makeText(getBaseContext(), listOfConversions.get(0), Toast.LENGTH_LONG).show();
-
         // output them to the textview
         TextView tv = (TextView)findViewById(R.id.textViewList);
         StringBuilder sb = new StringBuilder();
@@ -51,18 +48,6 @@ public class ConversionList extends Activity {
         getMenuInflater().inflate(R.menu.conversion_list, menu);
         return true;
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     public void OnMenuClick(MenuItem item) {
         switch (item.getItemId()) {
